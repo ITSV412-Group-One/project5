@@ -10,6 +10,10 @@ import hashlib
 
 app = Flask(__name__)
 
+@app.route("/")
+def hello_world():
+  return "<p> This is the Home page </p>"
+
 @app.route("/fibonacci/<int:input_number>")
 def get_fibonacci(input_number):
 
