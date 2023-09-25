@@ -7,3 +7,5 @@ from slack_sdk.errors import SlackApiError
 
 
 import hashlib
+
+app = Flask(__name__)
