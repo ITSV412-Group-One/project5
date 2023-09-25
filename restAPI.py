@@ -10,10 +10,12 @@ import hashlib
 
 app = Flask(__name__)
 
+# home screen
 @app.route("/")
 def hello_world():
   return "<p> This is the Home page </p>"
 
+# Maya 
 @app.route("/fibonacci/<int:input_number>")
 def get_fibonacci(input_number):
 
@@ -43,6 +45,7 @@ def is_prime(num):
       return False
   return True
 
+# Maya 
 @app.route("/is-prime/<int:input_number>")
 def check_prime(input_number):
   result = is_prime(input_number)
@@ -51,6 +54,8 @@ def check_prime(input_number):
     "output": result
   })
   
+  
+# port 4000 
 if __name__ == "__main__":
   app.run(host='0.0.0.0', port=4000)
   
