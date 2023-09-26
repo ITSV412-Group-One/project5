@@ -5,8 +5,28 @@ from math import factorial, sqrt
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
-
+import json
 import hashlib
+
+from flask import Flask
+
+
+# Mel string sunction 
+string = str(input("Enter a sting of characteristics: "))
+md5 = hashlib.md5(string.encode())
+end_md5 = md5.hexdigest()
+
+#endpoint
+json_obj =  {
+  "input": string,
+  "output": end_md5
+}
+
+#convert to JSON:
+final_obj = json.dumps(json_obj)
+
+print(final_obj)
+
 
 app = Flask(__name__)
 
