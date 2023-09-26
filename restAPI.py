@@ -73,7 +73,27 @@ def check_prime(input_number):
     "input": input_number,
     "output": result
   })
-  
+
+####################### Andres | /slack-alert/<string> #################################
+
+# If this doesn't work or gives an error, run the command 'pip install requests' in your terminal
+import requests
+
+app = Flask(__name__)
+
+# When connecting to the local server. Type your message after the port number. E.g. 127.0.0.1:4000/slack-alert/(YOUR MESSAGE HERE)
+@app.route("/slack-alert/<string:message>")
+def slack_alert(message):
+	webhook_url = "https://hooks.slack.com/services/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"
+	response = requests.post(webhook_url, json={"text": message})
+	
+  # This checks if 
+	if response.status_code == 200:
+		return jsonify({"Posted: ": True})
+	else:
+		return jsonify({"Posted: ": False})
+   
+########################################################################################
   
 # port 4000 
 if __name__ == "__main__":
