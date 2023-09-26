@@ -35,6 +35,22 @@ app = Flask(__name__)
 def hello_world():
   return "<p> This is the Home page </p>"
 
+#Danny
+# Function to calculate factorial
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+#factorial result
+@app.route('/factorial/<int:num>', methods=['GET'])
+def calculate_factorial(num):
+    if num < 0:
+        return jsonify({'error': 'Factorial is not defined for negative numbers'})
+    result = factorial(num)
+    return jsonify({'input': num, 'output': result})
+
 # Maya 
 @app.route("/fibonacci/<int:input_number>")
 def get_fibonacci(input_number):
