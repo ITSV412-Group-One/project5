@@ -40,6 +40,28 @@ def calculate_factorial(num):
         return jsonify({'error': 'Factorial is not defined for negative numbers'})
     result = factorial(num)
     return jsonify({'input': num, 'output': result})
+  
+# Maya 
+@app.route("/fibonacci/<int:input_number>")
+def get_fibonacci(input_number):
+
+  # Check for valid input
+  if input_number <= 0: 
+    return "Input must be a positive integer"
+
+  sequence = []
+
+  # Generate Fibonacci sequence
+  a, b = 0, 1
+  while b < input_number:
+    sequence.append(b)
+    a, b = b, a+b
+
+  return jsonify({
+    "input": input_number,
+    "output": sequence
+  })
+  
 
 # port 4000
 if __name__ == "__main__":
