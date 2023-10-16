@@ -8,8 +8,11 @@ from slack_sdk.errors import SlackApiError
 import json
 import hashlib
 
-from flask import Flask
 
+# home screen
+@app.route("/")
+def hello_world():
+  return "<p> This is the Home page </p>"
 
 # Mel string sunction 
 app = Flask(__name__)
@@ -21,30 +24,6 @@ def hash_string(input_string):
   output = md5.hexdigest()
 
   return jsonify({"input": input_string, "output": output})
-
-
-# string = str(input("Enter a sting of characteristics: "))
-# md5 = hashlib.md5(string.encode())
-# end_md5 = md5.hexdigest()
-
-#endpoint
-# json_obj =  {
-#  "input": string,
-#  "output": end_md5
-#}
-
-#convert to JSON:
-# final_obj = json.dumps(json_obj)
-
-# print(final_obj)
-
-
-# app = Flask(__name__)
-
-# home screen
-# @app.route("/")
-def hello_world():
-  return "<p> This is the Home page </p>"
 
 #Danny
 # Function to calculate factorial
