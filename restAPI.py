@@ -83,20 +83,6 @@ def check_prime(input_number):
     "output": result
   })
   
-app = Flask(__name__)
-
-SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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" 
-
-@app.route("/slack-alert/<string:message>")
-def send_slack_alert(message):
-
-  response = requests.post(SLACK_WEBHOOK_URL, json={"text": message})
-
-  if response.status_code == 200:
-    return jsonify({"Posted": True})
-  else:
-    return jsonify({"Posted": False})
-  
 
 # port 4000
 if __name__ == "__main__":
