@@ -45,22 +45,22 @@ def calculate_factorial(num):
 @app.route("/fibonacci/<int:input_number>")
 def get_fibonacci(input_number):
 
-  # Check for valid input
-  if input_number <= 0: 
+  # Validate input 
+  if input_number < 0:
     return jsonify({"error": "Input must be positive"}), 400
 
-  sequence = []
+  try:
+    sequence = []
 
-  # Generate Fibonacci sequence
-  a, b = 0, 1
-  while b < input_number:
-    sequence.append(b)
-    a, b = b, a+b
+    a, b = 0, 1
+    while b < input_number:
+      sequence.append(b)
+      a, b = b, a+b
 
-  return jsonify({
-    "input": input_number,
-    "output": sequence
-  })
+    return jsonify({"input": input_number, "output": sequence}), 200
+  
+  except Exception as e:
+    return jsonify({"error": "An error occurred"}), 500
   
 # Maya 
 def is_prime(num):
