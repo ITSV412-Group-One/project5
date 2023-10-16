@@ -66,6 +66,8 @@ def get_fibonacci(input_number):
     return jsonify({"input": input_number, "output": sequence}), 200
   
   except Exception as e:
+    print(e)
+    traceback.print_exc()
     print("Error occurred during processing")
     return jsonify({"error": "An error occurred"}), 500
   
