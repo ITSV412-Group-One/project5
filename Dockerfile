@@ -13,7 +13,7 @@ RUN pip install -r requirements.txt
 RUN pip install requests
 
 # Copy all the local code into the container
-COPY API5.py .
+COPY restAPI.py .
 
 # Define the command to run your application
-CMD ["python", "API5.py"]
+CMD ["python", "restAPI.py"]
