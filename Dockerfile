@@ -19,7 +19,7 @@ RUN pip install requests
 EXPOSE 4000
 
 # define environment variable
-# ENV NAME API 
+ENV NAME API 
 
 # Copy all the local code into the container
 # COPY restAPI.py .
