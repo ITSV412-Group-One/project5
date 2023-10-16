@@ -9,6 +9,7 @@ import json
 import hashlib
 
 import requests
+import traceback
 
 app = Flask(__name__)
 # home screen
@@ -45,31 +46,27 @@ def calculate_factorial(num):
 @app.route("/fibonacci/<int:input_number>")
 def get_fibonacci(input_number):
 
-  # Validate input 
-  if input_number < 0:
-    print("Negative input, handling error...") 
-    return jsonify({"error": "Input must be positive"}), 400
-  
-  print("Input validation passed")
+  print(f"Received input: {input_number}")
 
   try:
-    print("Generating sequence...")
+    if input_number < 0:
+      print("Negative input received.")
+      return jsonify({"error": "Input must be positive."}), 400
+    
     sequence = []
-
     a, b = 0, 1
+    
     while b < input_number:
       sequence.append(b)
-      a, b = b, a+b
-      
-    print("Sequence generated successfully")
+      a, b = b, a + b
 
+    print("Sequence generated successfully.")  
     return jsonify({"input": input_number, "output": sequence}), 200
-  
+
   except Exception as e:
-    print(e)
+    print(f"Error generating sequence: {e}")
     traceback.print_exc()
-    print("Error occurred during processing")
-    return jsonify({"error": "An error occurred"}), 500
+    return jsonify({"error": "An error occurred."}), 500
   
 # Maya 
 def is_prime(num):
