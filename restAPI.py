@@ -12,23 +12,29 @@ from flask import Flask
 
 
 # Mel string sunction 
-string = str(input("Enter a sting of characteristics: "))
-md5 = hashlib.md5(string.encode())
-end_md5 = md5.hexdigest()
+def hash_string(input_string):
+
+  md5 = hashlib.md5(input_string.encode())
+  output = md5.hexdigest()
+
+  return jsonify({"input": input_string, "output": output})
+# string = str(input("Enter a sting of characteristics: "))
+# md5 = hashlib.md5(string.encode())
+# end_md5 = md5.hexdigest()
 
 #endpoint
-json_obj =  {
-  "input": string,
-  "output": end_md5
-}
+# json_obj =  {
+#  "input": string,
+#  "output": end_md5
+#}
 
 #convert to JSON:
-final_obj = json.dumps(json_obj)
+# final_obj = json.dumps(json_obj)
 
-print(final_obj)
+# print(final_obj)
 
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
 # home screen
 @app.route("/")
