@@ -25,6 +25,22 @@ def hash_string(input_string):
 
   return jsonify({"input": input_string, "output": output})
 
+#Danny
+# Function to calculate factorial
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+#factorial result
+@app.route('/factorial/<int:num>', methods=['GET'])
+def calculate_factorial(num):
+    if num < 0:
+        return jsonify({'error': 'Factorial is not defined for negative numbers'})
+    result = factorial(num)
+    return jsonify({'input': num, 'output': result})
+
 # port 4000
 if __name__ == "__main__":
   app.run(host='0.0.0.0', port=4000)
