@@ -12,12 +12,17 @@ from flask import Flask
 
 
 # Mel string sunction 
+app = Flask(__name__)
+
+@app.route("/hash/<string:input_string>")
 def hash_string(input_string):
 
   md5 = hashlib.md5(input_string.encode())
   output = md5.hexdigest()
 
   return jsonify({"input": input_string, "output": output})
+
+
 # string = str(input("Enter a sting of characteristics: "))
 # md5 = hashlib.md5(string.encode())
 # end_md5 = md5.hexdigest()
@@ -37,7 +42,7 @@ def hash_string(input_string):
 # app = Flask(__name__)
 
 # home screen
-@app.route("/")
+# @app.route("/")
 def hello_world():
   return "<p> This is the Home page </p>"
 
