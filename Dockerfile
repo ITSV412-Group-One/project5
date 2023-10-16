@@ -25,4 +25,4 @@ ENV NAME API
 # COPY restAPI.py .
 
 # Define the command to run your application
-CMD ["python", "app.py"]
+CMD ["python", "restAPI.py"]

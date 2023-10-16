@@ -9,14 +9,13 @@ import json
 import hashlib
 
 
+app = Flask(__name__)
 # home screen
 @app.route("/")
 def hello_world():
   return "<p> This is the Home page </p>"
 
 # Mel string sunction 
-app = Flask(__name__)
-
 @app.route("/hash/<string:input_string>")
 def hash_string(input_string):
 
