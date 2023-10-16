@@ -21,7 +21,7 @@ def test_fibonacci():
   print(f"Response: {r.text}")
   
   assert r.status_code == 200
-  assert "Input must be a positive integer" in r.text
+  assert "Input must be positive" in r.text
 
   print("Fibonacci test passed!")
 
