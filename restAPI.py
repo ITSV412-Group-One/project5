@@ -47,7 +47,7 @@ def get_fibonacci(input_number):
 
   # Check for valid input
   if input_number <= 0: 
-    return jsonify({"error": "Input must be positive"})
+    return jsonify({"error": "Input must be positive"}), 400
 
   sequence = []
 
