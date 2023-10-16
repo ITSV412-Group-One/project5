@@ -22,7 +22,7 @@ EXPOSE 4000
 ENV NAME API 
 
 # Copy all the local code into the container
-# COPY restAPI.py .
+COPY restAPI.py .
 
 # Define the command to run your application
 CMD ["python", "restAPI.py"]
