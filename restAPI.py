@@ -47,19 +47,26 @@ def get_fibonacci(input_number):
 
   # Validate input 
   if input_number < 0:
+    print("Negative input, handling error...") 
     return jsonify({"error": "Input must be positive"}), 400
+  
+  print("Input validation passed")
 
   try:
+    print("Generating sequence...")
     sequence = []
 
     a, b = 0, 1
     while b < input_number:
       sequence.append(b)
       a, b = b, a+b
+      
+    print("Sequence generated successfully")
 
     return jsonify({"input": input_number, "output": sequence}), 200
   
   except Exception as e:
+    print("Error occurred during processing")
     return jsonify({"error": "An error occurred"}), 500
   
 # Maya 
