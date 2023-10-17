@@ -30,7 +30,7 @@ def test_md5_endpoint(test_string, expected_md5_hash):
 
     assert actual_md5_hash == expected_md5_hash, f"MD5 test failed for input: {test_string}"
 
-# Utility function to log the comparison (optional)
+# Utility function to log the comparison 
 def log_comparison(expected, actual, message):
     print(message)
     print(f"Expected: {expected}")
