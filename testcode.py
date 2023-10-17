@@ -7,7 +7,7 @@ def api_url():
   return "http://localhost:8000"
 
 # a function to test the /md5/<string> endpoint
-@pytest.mark.parametrize("test_string, expected_hash", [
+@pytest.mark.parametrize("test_string", [
   "hello",
   "test"
 ])
