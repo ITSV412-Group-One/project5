@@ -1,42 +1,43 @@
 import requests
-import sys 
+import pytest
+from pytest_mock import mocker # noqa
 
 BASE_URL = "http://localhost:4000"
 
 def test_fibonacci():
 
-  print("Testing /fibonacci endpoint...")
+  # Positive test
+  response = requests.get(f"{BASE_URL}/fibonacci/10")
+  assert response.status_code == codes.ok
+  assert response.json()["input"] == 10
+  assert response.json()["output"] == [1, 1, 2, 3, 5, 8]
 
-  r = requests.get(f"{BASE_URL}/fibonacci/10")
-    
-  print(f"Status code: {r.status_code}")
-  print(f"Response: {r.text}")
+  # Negative test
+  response = requests.get(f"{BASE_URL}/fibonacci/-1")
+  assert response.status_code == codes.bad_request
+  assert "Input must be positive" in response.json()["error"]
 
-  if r.status_code == 200:
-    assert r.json()["input"] == 10 
-    assert r.json()["output"] == [1, 1, 2, 3, 5, 8]
+  # Edge case
+  response = requests.get(f"{BASE_URL}/fibonacci/0")
+  assert response.json()["output"] == []
 
-  else:
-    print("Got unexpected status code, skipping assertions")
+  # Invalid input type
+  response = requests.get(f"{BASE_URL}/fibonacci/foo")
+  assert response.status_code == codes.bad_request
 
-  r = requests.get(f"{BASE_URL}/fibonacci/-1")
-   
-  print(f"Status code: {r.status_code}")
-  print(f"Response: {r.text}")
+  print("Fibonacci tests passed!")
 
-  if r.status_code == 400:  
-    assert "Input must be positive" in r.text
-  
-  else:
-    print("Got unexpected status code, skipping assertions")
+# Additional test functions for each endpoint
 
-  print("Fibonacci test passed!")
+def run_tests():
+  functions = [test_fibonacci] # etc
+
+  for test in functions:
+    test()
+
+  # Return 0 if all passed
+  return 0
 
 if __name__ == "__main__":
-  
-  test_fibonacci()
-
-  if True:
-    sys.exit(0)
-  else:
-    sys.exit(1)
+  exit_code = run_tests()
+  sys.exit(exit_code)
