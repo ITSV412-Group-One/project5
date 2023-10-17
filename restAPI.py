@@ -17,5 +17,7 @@ app = Flask(__name__)
 def hello_world():
   return "<p> This is the Home page </p>"
 
-
+# port 4000
+if __name__ == "__main__":
+  app.run(host='0.0.0.0', port=4000)
   
