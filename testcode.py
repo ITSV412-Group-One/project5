@@ -47,12 +47,10 @@ def test_prime(api_url, n, expected, status_code):
   assert response.status_code == status_code
   
   if status_code == 200:
-    assert response.json()["output"] == expected
-  else:
-    # Could check error message here
-    #assert "Not Found" in response.text
+    assert response.json() == expected
 
-    pass
+  else:
+    assert "Not Found" in response.text
 
 def test_prime_invalid_input(api_url):
   
