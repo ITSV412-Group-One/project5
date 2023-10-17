@@ -5,11 +5,6 @@ import pytest
 def api_url():
   return "http://localhost:8000"
 
-@pytest.mark.parametrize("n,expected,status_code", [
-  (6, [1, 1, 2, 3, 5, 8], 200),
-  (-1, {"error": "Invalid input"}, 404)  
-])
-
 # a function to test the /md5/<string> endpoint
 @pytest.mark.parametrize(
     "test_string, expected_md5_hash",
@@ -36,8 +31,11 @@ def log_comparison(expected, actual, message):
     print(f"Actual: {actual}")
     
 # Maya 
-
 # test fibonacci code - Maya
+@pytest.mark.parametrize("n,expected,status_code", [
+  (6, [1, 1, 2, 3, 5, 8], 200),
+  (-1, {"error": "Invalid input"}, 404)  
+])
 def test_fibonacci(api_url, n, expected, status_code):
 
   url = f"{api_url}/fibonacci/{n}"
