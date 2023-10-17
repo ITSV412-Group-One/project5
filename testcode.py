@@ -14,7 +14,7 @@ def api_url():
         ("test String", "bd08ba3c982eaad768602536fb8e1184")
     ]
 )
-def test_md5_endpoint(test_string, expected_md5_hash):
+def test_md5_endpoint(base_url,test_string,expected_md5_hash):
     url = f"{base_url}/md5/{test_string}"
     response = requests.get(url)
     assert response.status_code == 200, f"MD5 endpoint returned a non-200 status code for input: {test_string}"
