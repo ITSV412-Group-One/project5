@@ -33,7 +33,7 @@ def test_invalid_input(api_url):
   
 # is-prime test function
   
-@pytest.mark.parametrize("n,expected", [
+@pytest.mark.parametrize("n,expected,status_code", [
   (7, True),
   (10, False),  
   (1, False),
