@@ -45,8 +45,12 @@ def test_prime(api_url, n, expected):
 
   response = requests.get(url)
 
-  assert response.status_code == 200 
-  assert response.json()["output"] == expected
+  if n >= 0:  
+    assert response.status_code == 200
+    assert response.json()["output"] == expected
+
+  else:
+    assert response.json()["error"] == expected
 
 def test_prime_invalid_input(api_url):
   
