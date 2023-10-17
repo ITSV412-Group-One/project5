@@ -9,9 +9,9 @@ def api_url():
 # a function to test the /md5/<string> endpoint
 @pytest.mark.parametrize("test_string", [
   "hello",
-  "test"
+  "test" 
 ])
-def test_string_hash(api_url, test_string, expected_hash):
+def test_string_hash(api_url, test_string):
 
   url = f"{api_url}/hash/{test_string}"
   response = requests.get(url)
