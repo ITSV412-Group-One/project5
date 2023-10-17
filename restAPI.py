@@ -51,9 +51,12 @@ def fibonacci(n):
 
   sequence = [1, 1]
 
-  for i in range(n-1):
-    sequence.append(sequence[-1] + sequence[-2])
-
+  i = 2
+  while i < n:
+    next_val = sequence[-1] + sequence[-2]
+    sequence.append(next_val)
+    i += 1
+    
   return jsonify(sequence)
 
   
