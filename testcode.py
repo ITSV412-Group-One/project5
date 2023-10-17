@@ -99,3 +99,5 @@ def test_factorial():
 
   # Test large numbers.
   assert math.isclose(factorial(100), 9.33262154439441e+157)
+
+  ### Slack Alert Test - Andres. Currently working on fixing the errors that my old slack-alert function caused and will update this code when ready. ###
