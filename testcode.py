@@ -3,7 +3,7 @@ import pytest
 
 @pytest.fixture
 def api_url():
-  return "http://localhost:4000"
+  return "http://localhost:8000"
 
 @pytest.mark.parametrize("n,expected,status_code", [
   (6, [1, 1, 2, 3, 5, 8], 200),
