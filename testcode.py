@@ -19,11 +19,11 @@ def test_fibonacci_negative():
   print(f"Status code: {r.status_code}")
   print(f"Response: {r.text}")
   
-  if __name__ == "__main__":
+if __name__ == "__main__":
     test_fibonacci_positive()
     test_fibonacci_negative()
 
-  if True:
+if True:
     sys.exit(0)
-  else:
+else:
     sys.exit(1)
