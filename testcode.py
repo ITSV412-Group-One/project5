@@ -24,7 +24,7 @@ def test_fibonacci():
   print(f"Status code: {r.status_code}")
   print(f"Response: {r.text}")
 
-  if r.status_code == 200:  
+  if r.status_code == 400:  
     assert "Input must be positive" in r.text
   
   else:
