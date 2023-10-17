@@ -6,38 +6,32 @@ def api_url():
   return "http://localhost:8000"
 
 # a function to test the /md5/<string> endpoint
-@pytest.mark.parametrize(
-    "test_string, expected_md5_hash",
-    [
-        ("Hello World", "b10a8db164e07541005b7a99be72e3fe5"),
-        ("%20", "7215ee9c7d9dc229d2921a40e899ec5f"),
-        ("test String", "bd08ba3c982eaad768602536fb8e1184")
-    ]
-)
-def test_md5_endpoint(api_url,test_string,expected_md5_hash):
-    url = f"{api_url}/md5/{test_string}"
-    response = requests.get(url)
-    
-    print(response.status_code)
-    print(response.text)
+@pytest.mark.parametrize("test_string, expected_hash", [
+  ("hello", "5d41402abc4b2a76b9719d911017c592"),
+  ("test", "9f86d081884c7d659a2feaa0c55ad015"),
+])
+def test_string_hash(api_url, test_string, expected_hash):
 
-    if response.status_code == 200:
+  url = f"{api_url}/hash/{test_string}"
+  response = requests.get(url)
 
-      actual_response = json.loads(response.text)
-      actual_md5_hash = actual_response['output']
+  print(response.status_code)
+  print(response.text)
 
-      assert actual_md5_hash == expected_md5_hash
-  
-    else:
-      assert False, "Unexpected status code returned"  
-      
-    log_comparison(expected_md5_hash, actual,md5_hash, "MD5 comparison:")
+  if response.status_code == 200:
 
-# Utility function to log the comparison 
-def log_comparison(expected, actual, message):
-    print(message)
-    print(f"Expected: {expected}")
-    print(f"Actual: {actual}")
+    data = json.loads(response.text)
+    assert data["output"] == expected_hash
+
+  else:
+    assert False, "Unexpected response"
+
+def test_invalid_input(api_url):
+
+  url = f"{api_url}/hash/123"
+  response = requests.get(url)
+
+  assert response.status_code >= 400
     
 # Maya 
 # test fibonacci code - Maya
