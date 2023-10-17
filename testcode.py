@@ -31,7 +31,7 @@ def test_md5_endpoint(api_url,test_string,expected_md5_hash):
     else:
       assert False, "Unexpected status code returned"  
       
-    # log_comparison(expected_md5_hash, actual,md5_hash, "MD5 comparison:")
+    log_comparison(expected_md5_hash, actual,md5_hash, "MD5 comparison:")
 
 # Utility function to log the comparison 
 def log_comparison(expected, actual, message):
