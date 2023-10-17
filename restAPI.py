@@ -45,21 +45,27 @@ def calculate_factorial(num):
 # Maya 
 @app.route("/fibonacci/<int:n>")
 def fibonacci(n):
+  try:
+    if n < 0:
+      raise ValueError("Invalid input")  
 
-  if n < 0:
-    return "Invalid input", 400
+    # positive case logic
+    sequence = [1, 1]
 
-  sequence = [1, 1]
-
-  i = 2
-  while i < n:
-    next_val = sequence[-1] + sequence[-2]
-    sequence.append(next_val)
-    i += 1
+    i = 2
+    while i < n:
+      next_val = sequence[-1] + sequence[-2]
+      sequence.append(next_val)
+      i += 1
     
-  return jsonify(sequence)
+    return jsonify(sequence)
 
-  
+  except ValueError as e:
+    return str(e), 400
+
+  except Exception as e:
+    return "Error", 500
+
 # Maya 
 def is_prime(num):
   if num <= 1:

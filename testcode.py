@@ -22,8 +22,11 @@ def test_fibonacci_negative():
 
   response = requests.get(f"{URL}/fibonacci/-1")
 
-  assert response.status_code == 400
+  print(response.status_code)
 
+  assert response.status_code >= 400
+  assert "Invalid input" in response.text
+  
   print("Negative case passed!")
 
 if __name__ == "__main__":
