@@ -1,6 +1,6 @@
 import requests
 import pytest
-from requests import codespi
+from requests import codes
 
 BASE_URL = "http://localhost:4000"
 
