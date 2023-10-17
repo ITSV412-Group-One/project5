@@ -1,6 +1,5 @@
 import requests
 import pytest
-from restAPI import log_comparison
 
 @pytest.fixture
 def api_url():
