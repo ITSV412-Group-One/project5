@@ -27,18 +27,6 @@ def hash_string(input_string):
   return jsonify({"input": input_string, "output": output})
 
 
-import json
-import requests
-
-
-base_url = "http://127.0.0.1:4000"
-
-
-def log_comparison(expected, actual, message):
-   print(f"Expected: {expected}")
-   print(f"Actual: {actual}")
-   assert expected == actual, message 
-
 #Danny
 # Function to calculate factorial
 def factorial(n):
