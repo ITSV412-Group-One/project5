@@ -46,25 +46,31 @@ def calculate_factorial(num):
 @app.route("/fibonacci/<int:n>")
 def fibonacci(n):
 
+  print(f"Received request for fibonacci({n})")
   # Validate input
   if n < 0:
+    print("Negative input, returning 400 error")
     return jsonify({"error": "N must be positive"}), 400
 
   try:
+    print("Generating sequence...")
     sequence = []
     a, b = 0, 1
 
     while b < n:
       sequence.append(b)  
       a, b = b, a + b
-
+      
+    print("Successfully generated sequence, returning 200 OK")
     return jsonify({"input": n, "output": sequence}), 200
   
   except ValueError:
+    print("Invalid input, returning 400")
     return jsonify({"error": "Invalid input"}), 400
 
   except Exception as e:
-    print(e) 
+    print("Unhandled error occurred")
+    print(e)
     return jsonify({"error": "An error occurred"}), 500
   
 # Maya 
