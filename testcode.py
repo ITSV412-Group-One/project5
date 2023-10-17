@@ -1,6 +1,6 @@
 import requests
 import pytest
-from pytest_mock import mocker # noqa
+from requests import codespi
 
 BASE_URL = "http://localhost:4000"
 
