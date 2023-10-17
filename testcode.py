@@ -3,21 +3,27 @@ import requests
 URL = "http://localhost:4000"
 
 def test_fibonacci_positive():
-  print("Testing /fibonacci endpoint...")
+
+  print("Testing /fibonacci endpoint positive case...")
+  
   response = requests.get(f"{URL}/fibonacci/6")
+
+  print(response.json())
+
   assert response.status_code == 200
   assert response.json() == [1, 1, 2, 3, 5]
-  
-  print(f"Status code: {r.status_code}")
-  print(f"Response: {r.text}")
+
+  print("Positive case passed!")
 
 def test_fibonacci_negative():
-  print("Testing /fibonacci endpoint...")
-  response = requests.get(f"{URL}/fibonacci/-1") 
+
+  print("Testing /fibonacci endpoint negative case...")
+
+  response = requests.get(f"{URL}/fibonacci/-1")
+
   assert response.status_code == 400
-  
-  print(f"Status code: {r.status_code}")
-  print(f"Response: {r.text}")
+
+  print("Negative case passed!")
   
 if __name__ == "__main__":
     test_fibonacci_positive()
