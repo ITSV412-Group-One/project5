@@ -39,18 +39,14 @@ def test_invalid_input(api_url):
   (1, False),
   (-1, False)
 ])
-def test_prime(api_url, n, expected, status_code):
+def test_prime(api_url, n, expected):
 
   url = f"{api_url}/is-prime/{n}"
+
   response = requests.get(url)
 
-  assert response.status_code == status_code
-  
-  if status_code == 200:
-    assert response.json() == expected
-
-  else:
-    assert "Not Found" in response.text
+  assert response.status_code == 200 
+  assert response.json()["output"] == expected
 
 def test_prime_invalid_input(api_url):
   
