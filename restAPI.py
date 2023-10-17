@@ -18,7 +18,9 @@ def hello_world():
   return "<p> This is the Home page </p>"
 
 # port 4000
-if __name__ == "__main__":
-  print("App starting on port {}".format(port)) 
+port = 4000
+
+if __name__ == "__main__": 
+  print("App starting on port {}".format(port))
   app.run(host='0.0.0.0', port=4000)
   
