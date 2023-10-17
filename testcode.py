@@ -3,12 +3,13 @@ import pytest
 
 @pytest.fixture
 def api_url():
-  return "http://localhost:5000"
+  return "http://localhost:4000"
 
 @pytest.mark.parametrize("n,expected", [
   (6, [1, 1, 2, 3, 5, 8]),
   (-1, {"error": "Invalid input"})  
 ])
+
 def test_fibonacci(api_url, n, expected):
 
   url = f"{api_url}/fibonacci/{n}"
