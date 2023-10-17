@@ -16,7 +16,12 @@ def test_fibonacci(api_url, n, expected, status_code):
   response = requests.get(url)
 
   assert response.status_code == status_code
-  assert response.json() == expected
+  
+  if status_code == 200:
+    assert response.json() == expected
+
+  else:
+    assert "Not Found" in response.text
 
 def test_invalid_input(api_url):
 
