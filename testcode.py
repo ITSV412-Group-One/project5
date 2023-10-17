@@ -12,7 +12,7 @@ def api_url():
 
 # Maya 
 
-# test fibonacci code
+# test fibonacci code - Maya
 def test_fibonacci(api_url, n, expected, status_code):
 
   url = f"{api_url}/fibonacci/{n}"
@@ -31,8 +31,7 @@ def test_invalid_input(api_url):
   url = f"{api_url}/fibonacci/foo"
   response = requests.get(url)
   
-# is-prime test function
-  
+# is-prime test function - Maya 
 @pytest.mark.parametrize("n,expected", [
   (7, True),
   (10, False),  
