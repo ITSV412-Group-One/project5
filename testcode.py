@@ -1,5 +1,7 @@
 import requests
 import pytest
+import math
+from math import factorial
 
 @pytest.fixture
 def api_url():
@@ -81,3 +83,19 @@ def test_prime_invalid_input(api_url):
   response = requests.get(url)
 
   assert response.status_code >= 400
+
+# factorial testing - Danny
+def test_factorial():
+  """Test that the factorial function works correctly for a variety of inputs."""
+
+  # Test positive integers.
+  assert factorial(0) == 1
+  assert factorial(1) == 1
+  assert factorial(5) == 120
+
+  # Test negative integers.
+  with pytest.raises(ValueError):
+    factorial(-1)
+
+  # Test large numbers.
+  assert math.isclose(factorial(100), 9.33262154439441e+157)
