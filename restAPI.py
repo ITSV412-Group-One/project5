@@ -43,30 +43,29 @@ def calculate_factorial(num):
     return jsonify({'input': num, 'output': result})
   
 # Maya 
-@app.route("/fibonacci/<int:input_number>")
-def get_fibonacci(input_number):
+@app.route("/fibonacci/<int:n>")
+def fibonacci(n):
 
-  print(f"Received input: {input_number}")
+  # Validate input
+  if n < 0:
+    return jsonify({"error": "N must be positive"}), 400
 
   try:
-    if input_number < 0:
-      print("Negative input received.")
-      return jsonify({"error": "Input must be positive."}), 400
-    
     sequence = []
     a, b = 0, 1
-    
-    while b < input_number:
-      sequence.append(b)
+
+    while b < n:
+      sequence.append(b)  
       a, b = b, a + b
 
-    print("Sequence generated successfully.")  
-    return jsonify({"input": input_number, "output": sequence}), 200
+    return jsonify({"input": n, "output": sequence}), 200
+  
+  except ValueError:
+    return jsonify({"error": "Invalid input"}), 400
 
   except Exception as e:
-    print(f"Error generating sequence: {e}")
-    traceback.print_exc()
-    return jsonify({"error": "An error occurred."}), 500
+    print(e) 
+    return jsonify({"error": "An error occurred"}), 500
   
 # Maya 
 def is_prime(num):
