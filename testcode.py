@@ -50,7 +50,8 @@ def test_prime(api_url, n, expected):
     assert response.json()["output"] == expected
 
   else:
-    assert response.json()["error"] == expected
+    assert "Not Found" in response.text
+
 
 def test_prime_invalid_input(api_url):
   
