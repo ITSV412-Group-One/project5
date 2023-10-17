@@ -17,12 +17,21 @@ def api_url():
 def test_md5_endpoint(api_url,test_string,expected_md5_hash):
     url = f"{api_url}/md5/{test_string}"
     response = requests.get(url)
-    assert response.status_code == 200, f"MD5 endpoint returned a non-200 status code for input: {test_string}"
+    
+    print(response.status_code)
+    print(response.text)
 
-    actual_response = json.loads(response.text)
-    actual_md5_hash = actual_response['output']
+    if response.status_code == 200:
 
-    assert actual_md5_hash == expected_md5_hash, f"MD5 test failed for input: {test_string}"
+      actual_response = json.loads(response.text)
+      actual_md5_hash = actual_response['output']
+
+      assert actual_md5_hash == expected_md5_hash
+  
+    else:
+      assert False, "Unexpected status code returned"  
+      
+    # log_comparison(expected_md5_hash, actual,md5_hash, "MD5 comparison:")
 
 # Utility function to log the comparison 
 def log_comparison(expected, actual, message):
