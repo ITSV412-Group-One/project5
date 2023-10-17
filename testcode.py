@@ -8,8 +8,8 @@ def api_url():
 
 # a function to test the /md5/<string> endpoint
 @pytest.mark.parametrize("test_string, expected_hash", [
-  ("hello", "5d41402abc4b2a76b9719d911017c592"),
-  ("test", "9f86d081884c7d659a2feaa0c55ad015"),
+  "hello",
+  "test"
 ])
 def test_string_hash(api_url, test_string, expected_hash):
 
@@ -22,6 +22,10 @@ def test_string_hash(api_url, test_string, expected_hash):
   if response.status_code == 200:
 
     data = json.loads(response.text)
+    
+    import hashlib 
+    expected_hash = hashlib.md5(test_string.encode()).hexdigest()
+    
     assert data["output"] == expected_hash
 
   else:
