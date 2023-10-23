@@ -1,3 +1,4 @@
+import redis
 from flask import Flask, jsonify
 
 from math import factorial, sqrt
@@ -12,6 +13,8 @@ import requests
 import traceback
 
 app = Flask(__name__)
+redis_client = redis.Redis(host='redis', port=6379)
+
 # home screen
 @app.route("/")
 def hello_world():
