@@ -2,15 +2,16 @@ from flask import Flask, jsonify, request
 import redis
 
 from math import factorial, sqrt
-
-from slack_sdk import WebClient
-from slack_sdk.errors import SlackApiError
-
 import json
 import hashlib
-
 import requests
 import traceback
+#from slack_sdk import WebClient
+#from slack_sdk.errors import SlackApiError
+# For Slack-Alert Function. 
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 app = Flask(__name__)
 redis_client = redis.Redis(host='redis', port=4000)
@@ -109,7 +110,18 @@ def create_keyval():
         'value': value,
         'result': True
     })
-  
+
+# Slack Function - Andres
+@app.route("/slack-alert/<string:message>")
+def slack_alert(message):
+	webhook_url = os.getenv("SLACK_URL")
+	response = requests.post(webhook_url, json={"text": message})
+
+  # This checks if 
+	if response.status_code == 200:
+		return jsonify({"Posted: ": True})
+	else:
+		return jsonify({"Posted: ": False})
 
 # port 4000
 if __name__ == "__main__":

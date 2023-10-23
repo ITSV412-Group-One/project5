@@ -3,6 +3,9 @@ import json
 import pytest
 import math
 from math import factorial
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 @pytest.fixture
 def api_url():
@@ -109,4 +112,28 @@ def test_factorial():
   # Test large numbers.
   assert math.isclose(factorial(100), 9.33262154439441e+157)
 
-  ### Slack Alert Test - Andres. Currently working on fixing the errors that my old slack-alert function caused and will update this code when ready. ###
+  ### Slack Alert Test - Andres ###
+@pytest.mark.parametrize("test_message, expected_response",
+    [
+        ("Test", {"Posted: ": True}),
+        ("Test message from testcode.py", {"Posted: ": True}),
+    ]
+)
+def test_slack_alert(api_url, test_message, expected_response):
+    webhook_url = os.getenv("SLACK_URL")
+    url = f"{api_url}/slack-alert/{test_message}"
+    response = requests.get(url)
+    assert response.status_code == 200, f"slack_alert endpoint returned a non-200 status code for input: {test_message}"
+    actual_response = json.loads(response.text)
+    assert actual_response == expected_response, f"slack_alert test failed for input: {test_message}"
+
+@pytest.mark.parametrize("test_message, expected_response",
+    [("Failed Test", {"Posted: ": False})]
+)
+def test_slack_alert_fail(api_url, test_message, expected_response):
+    webhook_url = os.getenv("SLACK_URL")
+    url = f"{api_url}/slack-alert/{test_message}"
+    response = requests.get(url)
+    assert response.status_code == 200, f"slack_alert endpoint returned a non-200 status code for input: {test_message}"
+    actual_response = json.loads(response.text)
+    assert actual_response == expected_response, f"slack_alert test failed for input: {test_message}"
