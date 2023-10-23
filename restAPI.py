@@ -1,5 +1,6 @@
-import redis
 from flask import Flask, jsonify
+import redis
+
 
 from math import factorial, sqrt
 
