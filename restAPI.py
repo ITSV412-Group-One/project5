@@ -1,6 +1,5 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import redis
-
 
 from math import factorial, sqrt
 
@@ -91,6 +90,25 @@ def check_prime(input_number):
     "input": input_number, 
     "output": result
   })
+  
+#Create function - Maya 
+@app.route('/keyval', methods=['POST'])
+def create_keyval():
+    data = request.get_json()
+    key = data['key']
+    value = data['value']
+    
+    if redis_client.exists(key):
+        return jsonify({
+            'error': f'Key {key} already exists'
+        }), 409
+        
+    redis_client.set(key, value)
+    return jsonify({
+        'key': key, 
+        'value': value,
+        'result': True
+    })
   
 
 # port 4000
