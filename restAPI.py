@@ -54,7 +54,19 @@ def calculate_factorial(num):
         return jsonify({'error': 'Factorial is not defined for negative numbers'})
     result = factorial(num)
     return jsonify({'input': num, 'output': result})
-  
+
+#Danny GET function
+@app.route('/keyval/<string:key>', methods=['GET'])
+def get_key_value(key):
+    try:
+        value = redis_client.get(key)
+        if value is not None:
+            return jsonify({'key': key, 'value': value.decode()}), 200
+        else:
+            return jsonify({'error': 'Key does not exist'}), 404
+    except Exception as e:
+        return jsonify({'error': 'Invalid request', 'message': str(e)}), 400
+
 # Maya 
 @app.route("/fibonacci/<int:n>")
 def fibonacci(n):
