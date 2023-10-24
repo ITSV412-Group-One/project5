@@ -96,6 +96,10 @@ def check_prime(input_number):
 @app.route('/keyval', methods=['POST'])
 def create_keyval():
     data = request.get_json()
+    
+    if not data or not 'key' in data or not 'value' in data:
+        return jsonify({'error': 'Invalid request, key and value required'}), 400
+    
     key = data['key']
     value = data['value']
     

@@ -137,3 +137,8 @@ def test_slack_alert_fail(api_url, test_message, expected_response):
     assert response.status_code == 200, f"slack_alert endpoint returned a non-200 status code for input: {test_message}"
     actual_response = json.loads(response.text)
     assert actual_response == expected_response, f"slack_alert test failed for input: {test_message}"
+    
+@app.route('/test')
+def test():
+    r = requests.post('http://localhost:4000/keyval', json={'key': 'foo', 'value': 'bar'})
+    return str(r.status_code)
