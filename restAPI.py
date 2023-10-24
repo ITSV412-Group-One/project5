@@ -14,7 +14,7 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
-redis_client = redis.Redis(host='redis', port=4000)
+redis_client = redis.Redis(host='redis', port=6379)
 
 # home screen
 @app.route("/")
