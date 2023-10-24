@@ -6,6 +6,7 @@ import json
 import hashlib
 import requests
 import traceback
+
 #from slack_sdk import WebClient
 #from slack_sdk.errors import SlackApiError
 # For Slack-Alert Function. 
@@ -14,7 +15,14 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
-redis_client = redis.Redis(host='redis', port=6379)
+REDIS_HOST = os.getenv('REDIS_HOST')
+REDIS_PORT = os.getenv('REDIS_PORT')
+REDIS_PWD = os.getenv('REDIS_PWD')
+redis_client = redis.Redis(
+  host=REDIS_HOST, 
+  port=REDIS_PORT,
+  password=REDIS_PWD
+)
 
 # home screen
 @app.route("/")
