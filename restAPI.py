@@ -135,6 +135,43 @@ def create_keyval():
         'result': True
     })
 
+# Update
+@app.route('/keyval', methods=['PUT'])
+def update_keyval():
+    data = request.get_json()
+    key = data.get('storage-key')
+    value = data.get('storage-val')  
+
+    if not key or not value:
+        return jsonify({
+            'error': 'Invalid request. Both "storage-key" and "storage-val" must be provided.'
+        }), 400
+
+    if not redis_client.exists(key):
+        return jsonify({
+            'error': f'Key {key} does not exist'
+        }), 404
+
+    redis_client.set(key, value)
+    return jsonify({
+        'key': key,
+        'value': value,
+        'result': True
+    }), 200
+
+# Delete
+@app.route('/keyval/<string:key>', methods=['DELETE'])
+def delete_keyval(key):
+    if not redis_client.exists(key):
+        return jsonify({
+            'error': f'Key {key} does not exist'
+        }), 404
+    else:
+      redis_client.delete(key)
+    return jsonify({
+        'message': f'Key {key} deleted successfully'
+    }), 200
+
 # Slack Function - Andres
 @app.route("/slack-alert/<string:message>")
 def slack_alert(message):
