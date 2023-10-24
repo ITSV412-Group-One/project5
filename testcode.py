@@ -138,7 +138,12 @@ def test_slack_alert_fail(api_url, test_message, expected_response):
     actual_response = json.loads(response.text)
     assert actual_response == expected_response, f"slack_alert test failed for input: {test_message}"
     
-@app.route('/test')
-def test():
-    r = requests.post('http://localhost:4000/keyval', json={'key': 'foo', 'value': 'bar'})
-    return str(r.status_code)
+def test_create_keyval(api_url):
+    """Test creation of new key/value pair."""
+    
+    url = f"{api_url}/keyval"
+    data = {'key': 'foo', 'value': 'bar'}
+    
+    response = requests.post(url, json=data)
+    assert response.status_code == 200
+    assert response.json()['result'] == True
