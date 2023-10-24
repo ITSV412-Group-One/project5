@@ -21,7 +21,8 @@ REDIS_PWD = os.getenv('REDIS_PWD')
 redis_client = redis.Redis(
   host=REDIS_HOST, 
   port=REDIS_PORT,
-  password=REDIS_PWD
+  password=REDIS_PWD,
+  decode_responses=True
 )
 
 # home screen
