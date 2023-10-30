@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+
+  api:
+    build: .
+    image: restapi
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379 
+    ports:
+      - "8000:4000"
+    networks:
+      - backend
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  redis:
+    image: redis:alpine
+    networks:
+      - backend
+
+networks:
+  backend:
