@@ -147,3 +147,5 @@ def test_create_keyval(api_url):
     response = requests.post(url, json=data)
     assert response.status_code == 200
     assert response.json()['result'] == True
+    
+print("done")
