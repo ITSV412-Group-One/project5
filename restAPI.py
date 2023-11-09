@@ -69,28 +69,32 @@ def get_key_value(key):
         return jsonify({'error': 'Invalid request', 'message': str(e)}), 400
 
 # Maya 
-@app.route("/fibonacci/<int:n>")
 def fibonacci(n):
-  try:
-    if n < 0:
-      raise ValueError("Invalid input")  
+  if n < 0: 
+    return "Error: Input must be >= 0"
 
-    # positive case logic
-    sequence = [1, 1]
+  sequence = [1, 1]
 
-    i = 2
-    while i < n:
-      next_val = sequence[-1] + sequence[-2]
-      sequence.append(next_val)
-      i += 1
-    
-    return jsonify(sequence)
+  if n == 0:
+    return sequence[0]
+  elif n == 1: 
+    return sequence[1]
+  else:
+    for i in range(2, n+1):
+      next_num = sequence[-1] + sequence[-2]
+      sequence.append(next_num)
 
-  except ValueError as e:
-    return str(e), 400
+  return sequence[-1]
 
-  except Exception as e:
-    return "Error", 500
+@app.route("/fibonacci/<int:n>")
+def get_fibonacci(n):
+
+  result = fibonacci(n)
+
+  return jsonify({
+     "input": n,
+     "output": result
+  })
 
 # Maya 
 def is_prime(num):
