@@ -31,7 +31,7 @@ def hello_world():
   return "<p> Welcome Page! </p>"
 
 # Mel string sunction 
-@app.route("/hash/<string:input_string>")
+@app.route("/md5/<string:input_string>")
 def hash_string(input_string):
 
   md5 = hashlib.md5(input_string.encode())

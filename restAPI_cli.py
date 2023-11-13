@@ -36,7 +36,7 @@ if __name__ == '__main__':
   # Test hardcoded endpoints
   print('Testing endpoints...')
 
-  call_api('hash/hello')
+  call_api('md5/hello')
   call_api('factorial/5')
   call_api('fibonacci/5')
   call_api('is-prime/7')

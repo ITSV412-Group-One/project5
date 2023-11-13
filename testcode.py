@@ -19,7 +19,7 @@ def api_url():
 ])
 def test_string_hash(api_url, test_string):
 
-  url = f"{api_url}/hash/{test_string}"
+  url = f"{api_url}/md5/{test_string}"
   response = requests.get(url)
 
   print(response.status_code)
@@ -39,7 +39,7 @@ def test_string_hash(api_url, test_string):
 
 def test_invalid_input(api_url):
 
-  url = f"{api_url}/hash/123"
+  url = f"{api_url}/md5/123"
   response = requests.get(url)
 
   assert response.status_code >= 400
