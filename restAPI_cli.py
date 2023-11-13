@@ -5,7 +5,7 @@ import json
 import sys
 
 if os.environ.get('DOCKER_NETWORK_MODE') == 'backend':
-  BASE_URL = 'http://api:4000'
+  BASE_URL = 'http://restapi:4000'
 else:
   BASE_URL = 'http://127.0.0.1:8000' 
 
