@@ -19,22 +19,38 @@ def call_api(endpoint, args):
 
   url = BASE_URL + '/' + endpoint
   print(f"Request URL: {url}")
+  
+  resp = requests.get(url)
 
-  if args:
-    resp = requests.post(url, json=args)
+  if resp.status_code == 200:
+    data = resp.json()
+    print(json.dumps(data, indent=2))
   else:
-    resp = requests.get(url)
+    print(f'Error: {resp.status_code}')
 
   # Rest of function
 
 if __name__ == '__main__':
   
   args = parser.parse_args()
+  
   command = args.command
   command_args = args.args
 
-  print("Testing hardcoded endpoint...")
-  call_api("users", None)
+  # Test hardcoded endpoint
+  print('Testing hardcoded endpoint...')
+  call_api('hash/hello')
+  call_api('factorial/5') 
+  call_api('hash/hello')
+  call_api('fibonacci/5')
+  call_api('is-prime/5')
 
-  print("Calling command endpoint")
-  call_api(command, command_args)
+  if arg:
+    endpoint = f'{command}/{arg}'
+  else:
+    endpoint = command  
+
+  print(f'Calling endpoint: {endpoint}')
+
+  # Call API with endpoint
+  call_api(endpoint)
