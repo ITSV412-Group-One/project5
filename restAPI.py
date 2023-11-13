@@ -32,7 +32,7 @@ def hello_world():
 
 # Mel string sunction 
 @app.route("/md5/<string:input_string>")
-def hash_string(input_string):
+def md5_string(input_string):
 
   md5 = hashlib.md5(input_string.encode())
   output = md5.hexdigest()
