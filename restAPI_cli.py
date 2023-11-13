@@ -39,11 +39,11 @@ if __name__ == '__main__':
 
   # Test hardcoded endpoint
   print('Testing hardcoded endpoint...')
-  call_api('hash/hello')
-  call_api('factorial/5') 
-  call_api('hash/hello')
-  call_api('fibonacci/5')
-  call_api('is-prime/5')
+  call_api('hash/hello', None)
+  call_api('factorial/5', None) 
+  call_api('hash/hello', None)
+  call_api('fibonacci/5', None)
+  call_api('is-prime/5', None)
 
   if arg:
     endpoint = f'{command}/{arg}'
