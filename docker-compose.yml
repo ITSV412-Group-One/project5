@@ -24,14 +24,5 @@ services:
     networks:
       - backend
 
-  cli:
-    build: .
-    image: restapi_cli
-    depends_on:
-      - api
-    entrypoint: ["python", "/app/restAPI_cli.py"] 
-    networks:
-      - backend
-
 networks:
   backend:
