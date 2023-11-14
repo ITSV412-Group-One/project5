@@ -1,3 +1,4 @@
+# docker-compose file
 version: "3.8"
 
 services:
@@ -20,6 +21,15 @@ services:
 
   redis:
     image: redis:alpine
+    networks:
+      - backend
+
+  cli:
+    build: .
+    image: restapi_cli
+    depends_on:
+      - api
+    entrypoint: ["python", "/app/restAPI_cli.py"] 
     networks:
       - backend
 
