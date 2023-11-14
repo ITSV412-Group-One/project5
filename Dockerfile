@@ -16,4 +16,4 @@ ENV HOST=0.0.0.0
 CMD ["python", "restAPI.py"]
 
 # Define CLI as entrypoint
-ENTRYPOINT ["python", "restAPI_cli.py"]
+ENTRYPOINT ["python", "/app/restAPI_cli.py"]
