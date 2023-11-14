@@ -7,7 +7,9 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY . /app
+COPY restAPI.py /app/restAPI.py
+COPY restAPI_cli.py /app/restAPI_cli.py
+#COPY . /app
 #COPY restAPI_cli.py /app/restAPI_cli.py
 
 EXPOSE 4000

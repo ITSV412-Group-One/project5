@@ -23,5 +23,14 @@ services:
     networks:
       - backend
 
+  cli:
+    build: .
+    image: restAPI_cli
+    command: ["python", "/app/restAPI_cli.py"]
+    depends_on:
+      - api 
+    networks:
+      - backend
+
 networks:
   backend:
