@@ -12,5 +12,8 @@ EXPOSE 4000
 
 ENV HOST=0.0.0.0
 
-# Run restAPI.py instead of app.py
+# Run restAPI.py
 CMD ["python", "restAPI.py"]
+
+# Define CLI as entrypoint
+ENTRYPOINT ["python", "cli.py"]
