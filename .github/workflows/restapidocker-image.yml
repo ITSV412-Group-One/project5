@@ -1,15 +1,8 @@
-name: CI/CD Pipeline 
+name: Build and Test
 
 on:
-  push:  
+  push:
     branches: [ "main" ]
-    paths:   
-      - "restAPI/**"
-
-  pull_request:
-    branches: [ "main" ]
-    paths:
-      - "restAPI/**"
 
 jobs:
 
@@ -20,15 +13,14 @@ jobs:
     steps:
     
     - uses: actions/checkout@v3
-
-    - name: Start stack  
+    
+    - name: Start stack
       run: docker-compose up -d
 
-    - name: Run API
+    - name: Test API
       run: docker-compose exec api python restAPI.py
 
-    - name: Login to Docker Hub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}  
-        password: ${{ secrets.DOCKER_TOKEN }}
+    - name: Build image
+      run: |
+        docker-compose build
+        docker tag restapi myimage:latest
