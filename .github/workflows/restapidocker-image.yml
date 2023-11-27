@@ -18,7 +18,7 @@ jobs:
       run: docker-compose up -d
 
     - name: Test API
-      run: docker-compose exec api python restAPI.py
+      run: docker-compose exec -T api python restAPI.py
 
     - name: Build image
       run: |
