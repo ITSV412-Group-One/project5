@@ -2,7 +2,7 @@ import requests
 from flask import Flask
 app = Flask(__name__)
 
-host = "http://restapi:4000"
+host = "api"
 errors = 0
 import click
 

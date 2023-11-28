@@ -1,7 +1,7 @@
 import requests
 import json
 from flask import Flask, jsonify, escape, request, Response
-host = "http://restapi:4000"
+host = "api"
 errors = 0
 
 #all_tests = [
