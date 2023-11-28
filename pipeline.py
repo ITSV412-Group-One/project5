@@ -9,6 +9,7 @@ import json
 import re
 import sys
 
+host = '34.174.43.161'
 
 @click.command()
 @click.group(chain=True)	#Group every function together. 'chain=true' allows for multiple commands to be chained together

@@ -1,7 +1,7 @@
 import requests
 import json
 from flask import Flask, jsonify, escape, request, Response
-host = "api"
+host = '34.174.43.161'
 errors = 0
 
 #!/usr/bin/env python
