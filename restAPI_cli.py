@@ -2,7 +2,7 @@ import requests
 from flask import Flask
 app = Flask(__name__)
 
-host = 'redis' 
+host = "http://restapi:4000"
 errors = 0
 import click
 
