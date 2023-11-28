@@ -32,7 +32,7 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest -s testcode.py
+        python testcode.py
       shell: bash
 
   
