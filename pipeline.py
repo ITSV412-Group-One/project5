@@ -33,7 +33,6 @@ def MD5(word):
               help= 'factorial test')
 def IsFactorial(n):
   n = int(n)
-
   factorial = 1
   if(n < 0):
       return f"The number {n} is not a positive integer"
@@ -43,7 +42,7 @@ def IsFactorial(n):
       for i in range(1, n+1):
           factorial = factorial*i
           
-return jsonify(input=n, output=factorial)
+      return jsonify(input=n, output=factorial)
 
   
 @cli.command('fibonacci')	
