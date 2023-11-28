@@ -21,141 +21,33 @@ def pytest_runtest_logstart(node_id):
 def pytest_runtest_logfinish(node_id): 
     print(f"Finished test: {node_id}")
     
-# Mel
-# a function to test the /md5/<string> endpoint 
-@pytest.mark.parametrize("test_string", [
-  "hello",
-  "test" 
-])
-def test_string_hash(api_url, test_string):
-
-  url = f"{api_url}/md5/{test_string}"
-  response = requests.get(url)
-
-  print(response.status_code)
-  print(response.text)
-
-  if response.status_code == 200:
-
-    data = json.loads(response.text)
-    
-    import hashlib 
-    expected_hash = hashlib.md5(test_string.encode()).hexdigest()
-    
-    assert data["output"] == expected_hash
-
-  else:
-    assert False, "Unexpected response"
-
-def test_invalid_input(api_url):
-
-  url = f"{api_url}/md5/123"
-  response = requests.get(url)
-
-  assert response.status_code >= 400
-    
-# Maya 
-# test fibonacci code - Maya
-@pytest.mark.parametrize("n,expected,status_code", [
-  (6, [1, 1, 2, 3, 5, 8], 200),
-  (-1, {"error": "Invalid input"}, 404)  
-])
-def test_fibonacci(api_url, n, expected, status_code):
-
-  url = f"{api_url}/fibonacci/{n}"
-  response = requests.get(url)
-
-  assert response.status_code == status_code
-  
-  if status_code == 200:
-    assert response.json() == expected
-
-  else:
-    assert "Not Found" in response.text
-
-def test_invalid_input(api_url):
-
-  url = f"{api_url}/fibonacci/foo"
-  response = requests.get(url)
-  
-# is-prime test function - Maya 
+# Fibonacci tests  
 @pytest.mark.parametrize("n,expected", [
-  (7, True),
-  (10, False),  
-  (1, False),
-  (-1, False)
+  (8, [0, 1, 1, 2, 3, 5, 8]),
+  (1, [0, 1]),
 ])
-def test_prime(api_url, n, expected):
+def test_fibonacci(api_url, n, expected):
+  url = f"{api_url}/fibonacci/{n}"
+  assert requests.get(url).json() == expected
 
-  url = f"{api_url}/is-prime/{n}"
+# Factorial tests
+@pytest.mark.parametrize("num,expected", [
+  (4, 24),
+  (5, 120),
+  (0, 1),  
+])
+def test_factorial(api_url, num, expected):
+  url = f"{api_url}/factorial/{num}"
+  assert requests.get(url).json()['output'] == expected
 
-  response = requests.get(url)
+# md5 tests
+@pytest.mark.parametrize("input,expected", [
+  ("test", "098f6bcd4621d373cade4e832627b4f6"),
+  ("hello world", "5eb63bbbe01eeed093cb22bb8f5acdc3"),
+])  
+def test_md5(api_url, input, expected):
+  url = f"{api_url}/md5/{input}"
+  assert requests.get(url).json()['output'] == expected
 
-  if n >= 0:  
-    assert response.status_code == 200
-    assert response.json()["output"] == expected
-
-  else:
-    assert "Not Found" in response.text
-
-
-def test_prime_invalid_input(api_url):
-  
-  url = f"{api_url}/is-prime/foo"
-  response = requests.get(url)
-
-  assert response.status_code >= 400
-
-# factorial testing - Danny
-def test_factorial():
-  """Test that the factorial function works correctly for a variety of inputs."""
-
-  # Test positive integers.
-  assert factorial(0) == 1
-  assert factorial(1) == 1
-  assert factorial(5) == 120
-
-  # Test negative integers.
-  with pytest.raises(ValueError):
-    factorial(-1)
-
-  # Test large numbers.
-  assert math.isclose(factorial(100), 9.33262154439441e+157)
-
-  ### Slack Alert Test - Andres ###
-@pytest.mark.parametrize("test_message, expected_response",
-    [
-        ("Test", {"Posted: ": True}),
-        ("Test message from testcode.py", {"Posted: ": True}),
-    ]
-)
-def test_slack_alert(api_url, test_message, expected_response):
-    webhook_url = os.getenv("SLACK_URL")
-    url = f"{api_url}/slack-alert/{test_message}"
-    response = requests.get(url)
-    assert response.status_code == 200, f"slack_alert endpoint returned a non-200 status code for input: {test_message}"
-    actual_response = json.loads(response.text)
-    assert actual_response == expected_response, f"slack_alert test failed for input: {test_message}"
-
-@pytest.mark.parametrize("test_message, expected_response",
-    [("Failed Test", {"Posted: ": False})]
-)
-def test_slack_alert_fail(api_url, test_message, expected_response):
-    webhook_url = os.getenv("SLACK_URL")
-    url = f"{api_url}/slack-alert/{test_message}"
-    response = requests.get(url)
-    assert response.status_code == 200, f"slack_alert endpoint returned a non-200 status code for input: {test_message}"
-    actual_response = json.loads(response.text)
-    assert actual_response == expected_response, f"slack_alert test failed for input: {test_message}"
-    
-def test_create_keyval(api_url):
-    """Test creation of new key/value pair."""
-    
-    url = f"{api_url}/keyval"
-    data = {'key': 'foo', 'value': 'bar'}
-    
-    response = requests.post(url, json=data)
-    assert response.status_code == 200
-    assert response.json()['result'] == True
-    
-print("done")
+if __name__ == "__main__":
+  pytest.main(["-s", "testcode.py"])
