@@ -3,8 +3,6 @@ name: CI/CD Pipeline
 on:
   push:
     branches: [ "main" ]
-    paths:  
-      - "restAPI/**"
 
 jobs:
 
@@ -14,14 +12,15 @@ jobs:
 
     steps:
     
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-    - name: Build API image  
-      run: docker build -t myapi .
+    - name: Build image
+      run: |
+        docker-compose build
+        docker tag restapi myimage:latest
+    
+    - name: Start stack
+      run: docker-compose up -d
 
-    - name: Run container
-      run: docker run -d myapi  
-
-    - name: Run API tests   
-      run: docker exec myapi python /code/testcode.py
+  
+    
