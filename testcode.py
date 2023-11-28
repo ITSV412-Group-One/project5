@@ -11,6 +11,12 @@ load_dotenv()
 def api_url():
   return "http://localhost:8000"
 
+def pytest_runtest_logstart(node_id):
+    print(f"Running test: {node_id}")
+
+def pytest_runtest_logfinish(node_id): 
+    print(f"Finished test: {node_id}")
+    
 # Mel
 # a function to test the /md5/<string> endpoint 
 @pytest.mark.parametrize("test_string", [
