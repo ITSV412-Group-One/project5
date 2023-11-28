@@ -23,7 +23,7 @@ def cli(ctx, user_key):
 @click.option('--word', default='hello', help='md5 command')
 def md5(ctx, word):
     hash_obj = hashlib.md5(word.encode())
-    return jsonify(input=word, output=hash_obj.hexdigest())
+    click.echo(f"Input: {word}, Output: {hash_obj.hexdigest()}")
 
 @cli.command('factorial')
 @click.pass_context
@@ -32,13 +32,13 @@ def is_factorial(ctx, n):
     n = int(n)
     factorial = 1
     if n < 0:
-        return f"The number {n} is not a positive integer"
+        click.echo(f"The number {n} is not a positive integer")
     elif n == 0:
-        return jsonify(input=n, output=1)
+        click.echo(f"Input: {n}, Output: 1")
     else:
         for i in range(1, n + 1):
             factorial = factorial * i
-        return jsonify(input=n, output=factorial)
+        click.echo(f"Input: {n}, Output: {factorial}")
 
 @cli.command('fibonacci')
 @click.pass_context
@@ -46,10 +46,10 @@ def is_factorial(ctx, n):
 def fibonacci_num(ctx, n):
     fibonacci = [0]
     a, b = 0, 1
-    while b <= n:
+    while b <= int(n):
         fibonacci.append(b)
         a, b = b, a + b
-    return jsonify(input=n, output=fibonacci)
+    click.echo(f"Input: {n}, Output: {fibonacci}")
 
 @cli.command('prime-check')
 @click.pass_context
@@ -57,16 +57,18 @@ def fibonacci_num(ctx, n):
 def prime_check(ctx, n):
     n = int(n)
     if n < 0:
-        return f"Enter a positive non-zero integer"
+        click.echo(f"Enter a positive non-zero integer")
     elif n == 2:
-        return jsonify(input=n, output=True)
+        click.echo(f"Input: {n}, Output: True")
     elif n == 1 or n == 15:
-        return jsonify(input=n, output=False)
+        click.echo(f"Input: {n}, Output: False")
     else:
         for i in range(2, n):
             if n % i == 0:
-                return jsonify(input=n, output=False)
-        return jsonify(input=n, output=True)
+                click.echo(f"Input: {n}, Output: False")
+                break
+        else:
+            click.echo(f"Input: {n}, Output: True")
 
 @cli.command('slack-alert')
 @click.pass_context
@@ -81,9 +83,7 @@ def post_to_slack(ctx, msg):
     else:
         result = False
         mesg = f"There was a problem posting to the Slack channel (HTTP response: {resp.status_code})."
-    return jsonify(input=msg, output=result, message=mesg), 200 if resp.status_code == 200 else 400
-
-# Add your other commands here...
+    click.echo(f"Input: {msg}, Output: {result}, Message: {mesg}")
 
 if __name__ == '__main__':
     cli(obj={})
