@@ -4,14 +4,7 @@ from flask import Flask, jsonify, escape, request, Response
 host = "api"
 errors = 0
 
-#all_tests = [
-#    '/md5/test',
-#    '/md5/hello%20world',
-#    '/factorial/4',
-#    '/factorial/20',
-#    '/fibonacci/443',
-#    '/is-prime/15'
-#    ]
+#!/usr/bin/env python
 
 all_tests_dict = {  #IF U NEED SOMETHING TO DO: this dictonary needs to be populated with all endpoints and expected results
     '/md5/test': '098f6bcd4621d373cade4e832627b4f6',

@@ -40,7 +40,7 @@ services:
     volumes:
       - .:/app
     build: . 
-    command: ["sh", "-c", "pip install pytest && pytest -s testcode.py"]
+    command: ["python", "/app/testcode.py"] 
     depends_on:
      - api  
     networks:
