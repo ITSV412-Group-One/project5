@@ -35,6 +35,8 @@ services:
   testrunner:
     volumes:
       - .:/app
+    ports:
+      - "8000:4000"
     build: . 
     command: ["sh", "-c", "pip install pytest && pytest -s testcode.py"]
     depends_on:
