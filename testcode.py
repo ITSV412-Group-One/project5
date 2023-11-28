@@ -1,7 +1,7 @@
 import requests
 import json
 from flask import Flask, jsonify, escape, request, Response
-host = REDIS_HOST
+host = 'redis'
 errors = 0
 
 #all_tests = [

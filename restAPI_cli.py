@@ -2,7 +2,7 @@ import requests
 from flask import Flask
 app = Flask(__name__)
 
-host = REDIS_HOST 
+host = 'redis' 
 errors = 0
 import click
 
