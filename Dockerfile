@@ -6,9 +6,11 @@ WORKDIR /app
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
+RUN pip install pytest
 
 COPY restAPI.py /app/restAPI.py
 COPY restAPI_cli.py /app/restAPI_cli.py
+COPY testcode.py /app/testcode.py
 #COPY . /app
 #COPY restAPI_cli.py /app/restAPI_cli.py
 
