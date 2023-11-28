@@ -22,5 +22,10 @@ jobs:
     - name: Start stack
       run: docker-compose up -d
 
+    - name: Run API tests
+      run: docker-compose exec api python testcode.py
+
+      
+
   
     
