@@ -7,9 +7,12 @@ from dotenv import load_dotenv
 import os
 load_dotenv()
 
+if os.environ.get('DOCKER_NETWORK_MODE') == 'backend':
+  BASE_URL = 'http://restapi:4000'  
+else:
+  BASE_URL = 'http://127.0.0.1:8000'
 @pytest.fixture
-def api_url():
-  return "http://localhost:8000"
+
 
 def pytest_runtest_logstart(node_id):
     print(f"Running test: {node_id}")
