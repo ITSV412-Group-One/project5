@@ -11,9 +11,11 @@ load_dotenv()
 def api_url():
   if os.environ.get('DOCKER_NETWORK_MODE') == 'backend':
     return "'http://restapi:4000'"
-    print(f"Connection successful")
   else:
     return "http://127.0.0.1:8000"
+  
+def pytest_configure(config):
+    config.rootdir = '/app/testcode.py'
 
 
 def pytest_runtest_logstart(node_id):
