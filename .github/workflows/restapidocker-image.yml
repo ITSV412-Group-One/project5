@@ -1,27 +1,25 @@
 name: CI/CD Pipeline
 
 on:
-  push:
-    branches: [ "main" ]
-    paths:
-      - "restAPI/**"
-      
-  pull_request: 
+  push: 
     branches: [ "main" ]
     paths:  
       - "restAPI/**"
-
+      
 jobs:
 
-  test:
-
-    runs-on: ubuntu-latest
-    
+  build-and-test:
+  
     steps:
-    - uses: actions/checkout@v3
-
-    - name: Start containers
-      run: docker-compose up -d
-
-    - name: Test API 
-      run: docker-compose exec api python restAPI.py
+     
+     - name: Checkout code  
+       uses: actions/checkout@v3
+       
+     - name: Build API image
+       run: docker build -t myapi .
+       
+     - name: Run container
+       run: docker run -d myapi
+       
+     - name: Run API tests  
+       run: docker exec myapi python /code/testcode.py
