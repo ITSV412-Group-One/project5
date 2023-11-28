@@ -16,7 +16,7 @@ import sys
 @click.option('--cli', default= '',
               help= 'Command Line Interface')
 def cli(user_key):
-  pass:
+  pass
   
   
 @cli.command('md5')		#This is 'cli.command(...)' because it is grouped with cli
@@ -34,15 +34,16 @@ def MD5(word):
 def IsFactorial(n):
   n = int(n)
 
-	factorial = 1
-	if(n < 0):
-    return f"The number {n} is not a positive integer"
-	elif(n == 0):
-		return jsonify(input=n, output=1)
-	else:
-		for i in range(1, n+1):
-			factorial = factorial*i
-		return jsonify(input=n, output=factorial)
+  factorial = 1
+  if(n < 0):
+      return f"The number {n} is not a positive integer"
+  elif(n == 0):
+      return jsonify(input=n, output=1)
+  else:
+      for i in range(1, n+1):
+          factorial = factorial*i
+          
+return jsonify(input=n, output=factorial)
 
   
 @cli.command('fibonacci')	
