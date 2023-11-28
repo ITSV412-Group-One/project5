@@ -33,6 +33,8 @@ services:
       - backend
 
   testrunner:
+    volumes:
+      - .:/app
     build: . 
     command: ["sh", "-c", "pip install pytest && pytest -s testcode.py"]
     depends_on:
