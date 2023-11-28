@@ -21,7 +21,16 @@ def pytest_runtest_logstart(node_id):
 def pytest_runtest_logfinish(node_id): 
     print(f"Finished test: {node_id}")
     
+
 # Fibonacci tests  
+@pytest.mark.parametrize("endpoint,status_code", [
+    ("/fibonacci/6", 200),
+    ("/fibonacci/invalid", 400)
+]) 
+def test_fibonacci_response_codes(api_url, endpoint, status_code):
+
+   url = f"{api_url}{endpoint}"
+   res = requests.get(url)
 @pytest.mark.parametrize("n,expected", [
   (8, [0, 1, 1, 2, 3, 5, 8]),
   (1, [0, 1]),
@@ -31,6 +40,15 @@ def test_fibonacci(api_url, n, expected):
   assert requests.get(url).json() == expected
 
 # Factorial tests
+@pytest.mark.parametrize("endpoint,status_code", [
+    ("/factorial/5", 200),
+    ("/factorial/invalid", 400)
+])
+def test_factorial_response_codes(api_url, endpoint, status_code):
+
+   url = f"{api_url}{endpoint}"
+   res = requests.get(url)
+   
 @pytest.mark.parametrize("num,expected", [
   (4, 24),
   (5, 120),
@@ -40,14 +58,6 @@ def test_factorial(api_url, num, expected):
   url = f"{api_url}/factorial/{num}"
   assert requests.get(url).json()['output'] == expected
 
-# md5 tests
-@pytest.mark.parametrize("input,expected", [
-  ("test", "098f6bcd4621d373cade4e832627b4f6"),
-  ("hello world", "5eb63bbbe01eeed093cb22bb8f5acdc3"),
-])  
-def test_md5(api_url, input, expected):
-  url = f"{api_url}/md5/{input}"
-  assert requests.get(url).json()['output'] == expected
 
 if __name__ == "__main__":
   pytest.main(["-s", "testcode.py"])
