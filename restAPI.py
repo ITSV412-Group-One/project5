@@ -17,6 +17,9 @@ import traceback
 # For Slack-Alert Function. 
 from dotenv import load_dotenv
 import os
+print(os.environ["REDIS_HOST"]) # Prints redis-server
+
+
 load_dotenv()
 
 app = Flask(__name__)

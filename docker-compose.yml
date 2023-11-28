@@ -2,10 +2,10 @@ version: "3.8"
 
 services:
 
-  env_file:
-    - .env
 
   api:
+    env_file:
+      - .env
     build: .
     image: restapi
     environment:
