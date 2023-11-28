@@ -1,13 +1,16 @@
 # rest api 
 from flask import Flask, jsonify, request
 import redis
-import testcode
+import re
+import sys
+
 
 from math import factorial, sqrt
 import json
 import hashlib
 import requests
 import traceback
+
 
 #from slack_sdk import WebClient
 #from slack_sdk.errors import SlackApiError
@@ -27,6 +30,124 @@ redis_client = redis.Redis(
   decode_responses=True
 )
 
+@app.route('/keyval', methods = ['POST'])
+def post():
+	"""
+	Insert a single entry into the database.
+	:param key: The key for the entry.
+	:type key: string
+	:param value: The associated value.
+	:return: True is the insertion was successful; False otherwise.
+	:rtype: bool
+	"""
+	payload = request.get_json()
+	
+	
+	if REDIS.exists(payload['key']):
+		
+		return jsonify(
+			key= payload['key'], 
+			value = payload['value'], 
+			command=f"CREATE {payload['key']}/{payload['value']}",
+			result=False, 
+			error="Key already exists"
+		), 409
+	else:	
+		REDIS.set(payload['key'], payload['value'])
+		return jsonify(
+			key= payload['key'], 
+			value = payload['value'], 
+			command=f"CREATE {payload['key']}/{payload['value']}",
+			result=True, 
+			error=""
+		), 200
+
+
+@app.route('/keyval/<string:user_key>', methods = ['GET'])
+def get(user_key):
+	"""
+	Returns the entry associated with the key.
+	:param key: the key of the entry to be retrieved from the database
+	:type key: string
+	:return: entry associated with that key
+	:rtype: KeyValue"""
+	
+	
+	if REDIS.exists(user_key):
+		redis_val = REDIS.get(user_key)
+		return jsonify(
+			key=user_key,
+			value=redis_val.decode('unicode-escape'), #decodes the byte string to python string
+			command=f"GET {user_key}",
+			result=True,
+			error= ""
+		), 200
+	else:
+		return jsonify(
+			key=user_key, 
+			value=None, 
+			command=f"GET {user_key}",
+			result=False, 
+			error="Key does not exist"
+		), 404
+	
+@app.route('/keyval', methods = ['PUT'])
+def put():
+	"""
+	Updates the entry associated with the key with the value provided.
+	:param key: the entry's key
+	:param value: the new value of the entry
+	:return: void
+	"""
+	
+	payload = request.get_json()
+	
+	if REDIS.exists(payload['key']):
+		REDIS.set(payload['key'], payload['value'])
+		return jsonify(
+			key= payload['key'], 
+			value=payload['value'], 
+			command=f"UPDATE {payload['key']}/{payload['value']}",
+			result=True, 
+			error=""
+		), 200
+	else:
+		return jsonify(
+			key= payload['key'], 
+			value = payload['value'], 
+			command=f"UPDATE {payload['key']}/{payload['value']}",
+			result=False, 
+			error="Key does not exist, use POST to create key value pair."
+		), 404
+
+@app.route('/keyval/<string:user_key>',methods = ['DELETE'])
+def delete(user_key):
+	"""
+	Remove the entries associate with the keys provided.
+	:param keys: The keys of the entries to remove
+	:type keys: List<string>
+	:return: void
+	"""
+	
+	if REDIS.exists(user_key):	
+		redis_val = REDIS.get(user_key)
+		REDIS.delete(user_key)
+		return jsonify(
+			key=user_key,
+			value=redis_val.decode('unicode-escape'), #decodes the byte string to python string
+			command=f"DELETE {user_key}",
+			result=True,
+			error= ""
+		), 200
+	else:
+		return jsonify(
+			key=user_key, 
+			value=None, 
+			command=f"DELETE {user_key}",
+			result=False, 
+			error="Key does not exist, use POST to create key value pair."
+		), 404
+  
 # home screen
 @app.route("/")
 def hello_world():
@@ -57,18 +178,6 @@ def calculate_factorial(num):
         return jsonify({'error': 'Factorial is not defined for negative numbers'})
     result = factorial(num)
     return jsonify({'input': num, 'output': result})
-
-#Danny GET function
-@app.route('/keyval/<string:key>', methods=['GET'])
-def get_key_value(key):
-    try:
-        value = redis_client.get(key)
-        if value is not None:
-            return jsonify({'key': key, 'value': value.decode()}), 200
-        else:
-            return jsonify({'error': 'Key does not exist'}), 404
-    except Exception as e:
-        return jsonify({'error': 'Invalid request', 'message': str(e)}), 400
 
 # Maya 
 def fibonacci(n):
@@ -119,65 +228,6 @@ def check_prime(input_number):
     "output": result
   })
   
-#Create function - Maya 
-@app.route('/keyval', methods=['POST'])
-def create_keyval():
-    data = request.get_json()
-    
-    if not data or not 'key' in data or not 'value' in data:
-        return jsonify({'error': 'Invalid request, key and value required'}), 400
-    
-    key = data['key']
-    value = data['value']
-    
-    if redis_client.exists(key):
-        return jsonify({
-            'error': f'Key {key} already exists'
-        }), 409
-        
-    redis_client.set(key, value)
-    return jsonify({
-        'key': key, 
-        'value': value,
-        'result': True
-    })
-
-# Update
-@app.route('/keyval', methods=['PUT'])
-def update_keyval():
-    data = request.get_json()
-    key = data.get('storage-key')
-    value = data.get('storage-val')  
-
-    if not key or not value:
-        return jsonify({
-            'error': 'Invalid request. Both "storage-key" and "storage-val" must be provided.'
-        }), 400
-
-    if not redis_client.exists(key):
-        return jsonify({
-            'error': f'Key {key} does not exist'
-        }), 404
-
-    redis_client.set(key, value)
-    return jsonify({
-        'key': key,
-        'value': value,
-        'result': True
-    }), 200
-
-# Delete
-@app.route('/keyval/<string:key>', methods=['DELETE'])
-def delete_keyval(key):
-    if not redis_client.exists(key):
-        return jsonify({
-            'error': f'Key {key} does not exist'
-        }), 404
-    else:
-      redis_client.delete(key)
-    return jsonify({
-        'message': f'Key {key} deleted successfully'
-    }), 200
 
 # Slack Function - Andres
 @app.route("/slack-alert/<string:message>")
