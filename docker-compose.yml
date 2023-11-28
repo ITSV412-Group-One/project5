@@ -6,9 +6,9 @@ services:
     build: .
     image: restapi
     environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379 
-      - REDIS_PWD='BE1UW4XomabrdMNAQrcNf1hb1nuCDILb'
+      - REDIS_HOST=redis-10821.c309.us-east-2-1.ec2.cloud.redislabs.com
+      - REDIS_PORT=10821 
+      - REDIS_PWD=BE1UW4XomabrdMNAQrcNf1hb1nuCDILb
     ports:
       - "8000:4000"
     networks:
