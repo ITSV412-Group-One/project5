@@ -180,33 +180,23 @@ def calculate_factorial(num):
     return jsonify({'input': num, 'output': result})
 
 # Maya 
-def fibonacci(n):
-  if n < 0: 
-    return "Error: Input must be >= 0"
-
-  sequence = [1, 1]
-
-  if n == 0:
-    return sequence[0]
-  elif n == 1: 
-    return sequence[1]
-  else:
-    for i in range(2, n+1):
-      next_num = sequence[-1] + sequence[-2]
-      sequence.append(next_num)
-
-  return sequence[-1]
-
 @app.route("/fibonacci/<int:n>")
-def get_fibonacci(n):
+def fibonacci_num(n):
+	fibonacci = [0]
+	a = 0
+	b = 1
+	fib = 0
+	check = 0
 
-  result = fibonacci(n)
-
-  return jsonify({
-     "input": n,
-     "output": result
-  })
-
+	if n < 0:
+        	return jsonify(input=n, output="Error: Input must be a positive integer")
+	elif n == 0:
+        	fibonacci = [0]
+	else:
+		while b <= n:
+			fibonacci.append(b)
+			a , b = b, a + b
+	return jsonify(input=n, output=fibonacci)
 # Maya 
 def is_prime(num):
   if num <= 1:

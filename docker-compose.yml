@@ -8,6 +8,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379 
+      - REDIS_PWD='BE1UW4XomabrdMNAQrcNf1hb1nuCDILb'
     ports:
       - "8000:4000"
     networks:
