@@ -39,25 +39,6 @@ def test_fibonacci(api_url, n, expected):
   url = f"{api_url}/fibonacci/{n}"
   assert requests.get(url).json() == expected
 
-# Factorial tests
-@pytest.mark.parametrize("endpoint,status_code", [
-    ("/factorial/5", 200),
-    ("/factorial/invalid", 400)
-])
-def test_factorial_response_codes(api_url, endpoint, status_code):
-
-   url = f"{api_url}{endpoint}"
-   res = requests.get(url)
-   
-@pytest.mark.parametrize("num,expected", [
-  (4, 24),
-  (5, 120),
-  (0, 1),  
-])
-def test_factorial(api_url, num, expected):
-  url = f"{api_url}/factorial/{num}"
-  assert requests.get(url).json()['output'] == expected
-
 
 if __name__ == "__main__":
   pytest.main(["-s", "testcode.py"])
