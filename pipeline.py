@@ -72,7 +72,7 @@ def prime_check(ctx, n):
 @click.pass_context
 @click.option('--msg', default='1', help='slack-alert test')
 def post_to_slack(ctx, msg):
-    SLACK_URL = 'https://hooks.slack.com/services/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'
+    SLACK_URL =  "https://hooks.slack.com/services/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"
     data = {'text': msg}
     resp = requests.post(SLACK_URL, json=data)
     if resp.status_code == 200:

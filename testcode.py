@@ -6,7 +6,7 @@ errors = 0
 
 #!/usr/bin/env python
 
-all_tests_dict = {  #IF U NEED SOMETHING TO DO: this dictonary needs to be populated with all endpoints and expected results
+all_tests_dict = {  #all endpoints and expected results
     '/md5/test': '098f6bcd4621d373cade4e832627b4f6',
     '/md5/hello%20world': '5eb63bbbe01eeed093cb22bb8f5acdc3',
     '/md5': 404,
@@ -33,22 +33,8 @@ keyval_tests_dict = {
     
     }
 
-
-#test = requests.get(f'http://{host}/md5/test')  #manual and worst way
-#expected_result_md5 = 'slkdfjsdlfesid34'
-#test.json() #ouitputs library from the request {input:tester,output:3523423f3243"}
-#if expected_result_md5 == test.json()['output']:
-#    print('OK')
-
-
-#for test in all_tests: #using a for loop to test a list of endpoints
-#    t = requests.get(f'http://{host}{test}')
-#    print(f'Status code: {t.status_code}')
-#    if t.status_code != 200:
-#        errors += 1
         
-        
-for path, result in all_tests_dict.items(): #using a dict, best but most complicated way
+for path, result in all_tests_dict.items(): 
     print(f"Path: {path} / EXPECTED RESULT: {result}")
     t = requests.get(f'http://{host}{path}')
     if t.status_code == 200:
@@ -85,7 +71,7 @@ for path, result in keyval_tests_dict.items(): #post
               
 for path, result in keyval_tests_dict.items(): #GET
     print(f"Path: {path} / Method: GET / json payload {result}")
-    t = requests.get(f'http://{host}{path}/test1') #hardcoded get string. Could string splice my Dict key to extract the key string
+    t = requests.get(f'http://{host}{path}/test1') # hardcoded get string. Could string splice my Dict key to extract the key string
     print(f"Status code: {t.status_code}")
     if t.status_code == 200:
         print("PASS\n")
