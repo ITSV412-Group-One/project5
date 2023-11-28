@@ -10,7 +10,7 @@ load_dotenv()
 @pytest.fixture  
 def api_url():
   if os.environ.get('DOCKER_NETWORK_MODE') == 'backend':
-    return "http://api:4000"
+    return "'http://restapi:4000'"
   else:
     return "http://127.0.0.1:8000"
 
