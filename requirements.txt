@@ -2,4 +2,5 @@ Flask==2.3.3
 slack_sdk
 requests
 redis
+sqlalchemy
 python-dotenv==1.0.0

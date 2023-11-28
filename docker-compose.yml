@@ -42,5 +42,14 @@ services:
     networks:
      - backend
 
+  pipeline:
+    build: .
+    image: pipeline
+    command: ["python", "/app/pipeline.py"]
+    depends_on:
+      - api 
+    networks:
+      - backend
+
 networks:
   backend:

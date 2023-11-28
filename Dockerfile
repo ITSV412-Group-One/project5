@@ -6,13 +6,13 @@ WORKDIR /app
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-RUN pip install pytest
+RUN pip install click
 
 COPY restAPI.py /app/restAPI.py
 COPY restAPI_cli.py /app/restAPI_cli.py
-COPY ./testcode.py /app
-#COPY . /app
-#COPY restAPI_cli.py /app/restAPI_cli.py
+COPY testcode.py /app/testcode.py
+COPY pipeline.py /app/pipeline.py
+COPY setup.py /app/setup.py
 
 EXPOSE 4000
 ENV HOST=0.0.0.0
