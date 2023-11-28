@@ -28,11 +28,10 @@ jobs:
       run: docker-compose up -d
 
     - name: Set API_URL
-      run: 
+      run: echo "API_URL=http://api:4000" >> $GITHUB_ENV
 
     - name: Run tests
-        run: echo "API_URL=http://api:4000" >> $GITHUB_ENV
-        
+      run: |
         pytest -s testcode.py
       shell: bash
 
