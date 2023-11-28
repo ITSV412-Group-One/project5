@@ -10,7 +10,7 @@ RUN pip install pytest
 
 COPY restAPI.py /app/restAPI.py
 COPY restAPI_cli.py /app/restAPI_cli.py
-COPY testcode.py /app/testcode.py
+COPY ./testcode.py /app
 #COPY . /app
 #COPY restAPI_cli.py /app/restAPI_cli.py
 
