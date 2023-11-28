@@ -4,8 +4,6 @@ services:
 
 
   api:
-    env_file:
-      - .env
     build: .
     image: restapi
     environment:
