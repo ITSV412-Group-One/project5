@@ -12,16 +12,12 @@ def api_url():
   if os.environ.get('DOCKER_NETWORK_MODE') == 'backend':
     return "'http://restapi:4000'"
   else:
-    return "http://127.0.0.1:8000"
+    return "http://localhost:4000"
   
 def pytest_configure(config):
     config.rootdir = '/app/testcode.py'
 
-
-def pytest_runtest_logstart(node_id):
-    print(f"Running test: {node_id}")
-
-def pytest_runtest_logfinish(node_id): 
-    print(f"Finished test: {node_id}")
-    
+def test_api(api_url):
+    url = f"{api_url}/test"
+    res = requests.get(url)
 
